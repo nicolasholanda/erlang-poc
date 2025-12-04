@@ -1,0 +1,30 @@
+# Compiled Erlang files
+*.beam
+*.o
+
+# Erlang crash dumps
+erl_crash.dump
+
+# Dialyzer PLT files
+*.plt
+
+# Rebar3
+_build/
+rebar.lock
+
+# Erlang.mk
+deps/
+ebin/
+logs/
+
+# Editor and IDE
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

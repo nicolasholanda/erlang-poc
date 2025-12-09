@@ -8,8 +8,10 @@ start(Port) ->
     accept_loop(ListenSocket, RoomPid).
 
 accept_loop(ListenSocket, RoomPid) ->
+    io:format("Waiting for connection...~n"),
     {ok, Socket} = gen_tcp:accept(ListenSocket),
-    spawn(fun() -> client_handler(Socket, RoomPid) end),
+    io:format("Client connected! Socket: ~p~n", [Socket]),
+    client_handler(Socket, RoomPid),
     accept_loop(ListenSocket, RoomPid).
 
 client_handler(Socket, RoomPid) ->

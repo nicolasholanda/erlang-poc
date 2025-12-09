@@ -14,7 +14,8 @@ room_loop(Users) ->
         {leave, UserPid} ->
             NewUsers = lists:filter(fun({_, Pid}) -> Pid =/= UserPid end, Users),
             room_loop(NewUsers);
-        {message, FromPid, Msg} ->
-            lists:foreach(fun({_, P}) -> P ! {chat, FromPid, Msg} end, Users),
+        {message, FromUsername, Msg} ->
+            io:format("Broadcasting: ~s from ~s~n", [Msg, FromUsername]),
+            lists:foreach(fun({_, P}) -> P ! {chat, FromUsername, Msg} end, Users),
             room_loop(Users)
     end.

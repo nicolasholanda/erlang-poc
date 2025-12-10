@@ -11,7 +11,8 @@ accept_loop(ListenSocket, RoomPid) ->
     io:format("Waiting for connection...~n"),
     {ok, Socket} = gen_tcp:accept(ListenSocket),
     io:format("Client connected! Socket: ~p~n", [Socket]),
-    client_handler(Socket, RoomPid),
+    Pid = spawn(fun() -> client_handler(Socket, RoomPid) end),
+    gen_tcp:controlling_process(Socket, Pid),
     accept_loop(ListenSocket, RoomPid).
 
 client_handler(Socket, RoomPid) ->

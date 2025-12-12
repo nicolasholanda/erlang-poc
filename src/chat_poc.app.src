@@ -1,0 +1,8 @@
+{application, chat_poc,
+ [{description, "Chat POC"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {modules, [chat_room, chat_server, chat_user]},
+  {applications, [kernel, stdlib]},
+  {env, []}
+ ]}.

@@ -16,7 +16,7 @@ accept_loop(ListenSocket, RoomPid) ->
     accept_loop(ListenSocket, RoomPid).
 
 client_handler(Socket, RoomPid) ->
-    gen_tcp:send(Socket, <<"Enter username: ">>),
+    gen_tcp:send(Socket, <<"Enter username: " >>),
     receive
         {tcp, Socket, UsernameBin} ->
             Username = string:trim(binary_to_list(UsernameBin)),

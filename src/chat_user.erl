@@ -1,3 +1,4 @@
+
 -module(chat_user).
 -export([start/2, user_loop/2]).
 

@@ -4,7 +4,6 @@
 start() ->
     RoomPid = spawn(chat_room, room_loop, [[]]).
 
-
 room_loop(Users) ->
     receive
         {join, Username, UserPid} ->

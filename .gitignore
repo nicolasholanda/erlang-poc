@@ -1,0 +1,14 @@
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+node_modules/
+.env*
+_build/
+rebar.lock

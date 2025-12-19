@@ -148,6 +148,35 @@ export const useWebsocket = (wsUrl: string) => {
     }
   }, [])
 
+  const disconnect = useCallback(() => {
+    // Clear reconnect timeout to prevent auto-reconnect
+    if (reconnectTimeoutRef.current) {
+      clearTimeout(reconnectTimeoutRef.current)
+      reconnectTimeoutRef.current = null
+    }
+
+    // Clear typing timeouts
+    Object.values(typingTimeoutRef.current).forEach((timeout) => clearTimeout(timeout))
+    typingTimeoutRef.current = {}
+
+    // Close WebSocket connection
+    if (wsRef.current) {
+      wsRef.current.close()
+      wsRef.current = null
+    }
+
+    // Reset all state
+    setState({
+      connected: false,
+      users: [],
+      messages: [],
+      typingUsers: [],
+    })
+    setStatus("disconnected")
+    usernameRef.current = ""
+    reconnectAttemptsRef.current = 0
+  }, [])
+
   useEffect(() => {
     return () => {
       if (reconnectTimeoutRef.current) {
@@ -160,5 +189,5 @@ export const useWebsocket = (wsUrl: string) => {
     }
   }, [])
 
-  return { connect, sendMessage, sendTyping, state, status }
+  return { connect, sendMessage, sendTyping, disconnect, state, status }
 }

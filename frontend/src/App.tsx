@@ -15,7 +15,7 @@ function App() {
     process.env.NEXT_PUBLIC_WS_URL ||
     "ws://localhost:8080"
 
-  const { connect, sendMessage, sendTyping, state, status } = useWebsocket(wsUrl)
+  const { connect, sendMessage, sendTyping, disconnect, state, status } = useWebsocket(wsUrl)
 
   useEffect(() => {
     const stored = localStorage.getItem("chat_username")
@@ -32,6 +32,14 @@ function App() {
       localStorage.setItem("chat_username", name)
       connect(name)
     }
+  }
+
+  const handleLeave = () => {
+    disconnect()
+    localStorage.removeItem("chat_username")
+    setUsername("")
+    setUsernameInput("")
+    setSidebarOpen(false)
   }
 
   if (!username) {
@@ -61,6 +69,9 @@ function App() {
       <div className="connection-status" role="status" aria-live="polite">
         <span className={`status-indicator ${status}`}></span>
         {status === "connected" ? "Connected" : status === "connecting" ? "Connecting..." : "Disconnected"}
+        <button className="leave-button" onClick={handleLeave} aria-label="Leave chat">
+          Leave
+        </button>
       </div>
 
       <button
